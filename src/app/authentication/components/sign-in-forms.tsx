@@ -20,6 +20,9 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.email("Email inválido"),
@@ -29,6 +32,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 const SignInForms = () => {
+  const Router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,9 +40,28 @@ const SignInForms = () => {
       password: "",
     },
   });
-  function onSubmit(data: FormValues) {
-    console.log("Form submitted:", data);
-    console.log(data);
+  async function onSubmit(values: FormValues) {
+    await authClient.signIn.email(
+      {
+        email: values.email,
+        password: values.password,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Login realizado com sucesso!");
+          Router.push("/");
+        },
+        onError: (ctx) => {
+          if (ctx.error.code === "INVALID_EMAIL_OR_PASSWORD") {
+            toast.error("Email ou senha inválidos.");
+            form.setError("password", { message: "" });
+            form.setError("email", {
+              message: "Email ou senha inválidos",
+            });
+          }
+        },
+      },
+    );
   }
 
   return (
