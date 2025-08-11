@@ -20,6 +20,9 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const formSchema = z
   .object({
@@ -33,7 +36,10 @@ const formSchema = z
     path: ["confirmPassword"],
   });
 
+type FormData = z.infer<typeof formSchema>;
+
 const SignUpForms = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,9 +49,30 @@ const SignUpForms = () => {
       confirmPassword: "",
     },
   });
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log("Form submitted:", data);
+
+  async function onSubmit(values: FormData) {
+    const {} = await authClient.signUp.email(
+      {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+      },
+      {
+        onSuccess: () => {
+          router.push("/");
+        },
+        onError: (error) => {
+          if (error.error.code === "USER_ALREADY_EXISTS") {
+            toast.error(`O email já está em uso.`);
+            form.setError("email", { message: "O email já está em uso" });
+          } else {
+            toast.error("Ocorreu um erro ao criar sua conta. Tente novamente.");
+          }
+        },
+      },
+    );
   }
+
   return (
     <>
       <Card>
@@ -123,7 +150,6 @@ const SignUpForms = () => {
           </form>
         </Form>
       </Card>
-      ;
     </>
   );
 };
