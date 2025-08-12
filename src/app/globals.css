@@ -3,6 +3,17 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@layer utilities {
+  .scroll-x {
+    scroll-behavior: smooth;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .scroll-x::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
