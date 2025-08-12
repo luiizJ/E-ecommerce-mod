@@ -12,6 +12,7 @@ const CategorySelector = ({ categories }: CategorySelectorProps) => {
       <div className="grid grid-cols-2 gap-3">
         {categories.map((category) => (
           <Button
+            asChild
             key={category.id}
             variant={"ghost"}
             className="text-1xl rounded-full bg-neutral-300 font-semibold hover:text-sm"
