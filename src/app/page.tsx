@@ -1,4 +1,11 @@
-"use client";
-export default function Home() {
-  return <h1>sla</h1>;
-}
+import { Header } from "@/components/common/header";
+
+const Home = () => {
+  return (
+    <>
+      <Header />
+    </>
+  );
+};
+
+export default Home;
