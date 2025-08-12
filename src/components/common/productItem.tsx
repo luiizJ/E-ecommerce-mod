@@ -1,26 +1,29 @@
 import { formatMoney } from "@/app/helpers/formatedMoney";
 import type { productTable, productVariantTable } from "@/db/schema";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
 interface ProductItemProps {
   product: typeof productTable.$inferSelect & {
-    variant: (typeof productVariantTable.$inferSelect)[];
+    variants: (typeof productVariantTable.$inferSelect)[];
   };
+  containerWidth?: string;
 }
 
-const ProductItem = ({ product }: ProductItemProps) => {
-  const variantPosition = product.variant[0];
+const ProductItem = ({ product, containerWidth }: ProductItemProps) => {
+  const variantPosition = product.variants[0];
   return (
     <Link href="/" className="flex flex-col gap-4">
       <Image
         src={variantPosition.imageUrl}
         alt={variantPosition.name}
-        width={150}
-        height={150}
-        className="rounded-3xl"
+        sizes="100vw"
+        width={0}
+        height={0}
+        className="h-auto w-full rounded-3xl"
       />
-      <div className="flex max-w-[150px] flex-col gap-1">
+      <div className={cn("flex max-w-[150px] flex-col gap-1", containerWidth)}>
         <p className="truncate text-sm font-medium">{product.name}</p>
         <p className="text-muted-foreground truncate text-xs font-medium">
           {product.description}
