@@ -6,7 +6,7 @@ import ProductItem from "./productItem";
 interface ProductListProps {
   title: string;
   products: (typeof productTable.$inferSelect & {
-    variant: (typeof productVariantTable.$inferSelect)[];
+    variants: (typeof productVariantTable.$inferSelect)[];
   })[];
 }
 
