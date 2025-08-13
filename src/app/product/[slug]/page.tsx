@@ -64,7 +64,7 @@ const ProductVariantPage = async ({ params }: ProductPageProps) => {
           </h3>
         </div>
         <div className="px-5">
-          <QuantityProduct />
+          <QuantityProduct productVariantId={productVariant.id} />
         </div>
         <div className="px-5">
           <p className="text-shadow-amber-600">

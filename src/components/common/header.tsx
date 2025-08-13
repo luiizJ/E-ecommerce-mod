@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "../ui/sheet";
 import { authClient } from "@/lib/auth-client";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import Link from "next/link";
+import { Cart } from "./cart";
 
 export const Header = () => {
   const { data: session } = authClient.useSession();
@@ -16,7 +17,7 @@ export const Header = () => {
       <Link href={"/"}>
         <Image src="/vercel.svg" alt="logoMarca" width={100} height={26.14} />
       </Link>
-      <div className="flex items-center">
+      <div className="flex items-center gap-2">
         <Sheet>
           <SheetTrigger asChild>
             <Button variant={"outline"} size={"icon"}>
@@ -69,6 +70,7 @@ export const Header = () => {
             </div>
           </SheetContent>
         </Sheet>
+        <Cart />
       </div>
     </header>
   );
