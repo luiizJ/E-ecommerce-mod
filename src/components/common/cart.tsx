@@ -7,18 +7,14 @@ import {
   SheetTrigger,
 } from "../ui/sheet";
 import { Button } from "../ui/button";
-import { useQuery } from "@tanstack/react-query";
-import { getCart } from "@/app/actions/get-cart";
 import CartItem from "./cartItem";
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
 import { formatMoney } from "@/app/helpers/formatedMoney";
+import { UseCart } from "@/hooks/queries/use-cart";
 
 export const Cart = () => {
-  const { data, isPending } = useQuery({
-    queryKey: ["cart"],
-    queryFn: () => getCart(),
-  });
+  const { data } = UseCart();
   return (
     <>
       <Sheet>
@@ -39,6 +35,7 @@ export const Cart = () => {
                     <CartItem
                       key={itemCart.id}
                       id={itemCart.id}
+                      productVariantId={itemCart.productVariant.id}
                       productName={itemCart.productVariant.product.name}
                       productVariantImage={itemCart.productVariant.imageUrl}
                       productVariantName={itemCart.productVariant.name}
