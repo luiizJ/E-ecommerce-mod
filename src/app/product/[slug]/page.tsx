@@ -8,7 +8,7 @@ import { eq } from "drizzle-orm";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import VariantSelector from "./components/variant-selector";
-import QuantityProduct from "./components/quantity-product";
+import ProductActions from "./components/product-actions";
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
@@ -34,7 +34,7 @@ const ProductVariantPage = async ({ params }: ProductPageProps) => {
   return (
     <>
       <Header />
-      <div className="flex flex-col space-y-6">
+      <div className="flex flex-col space-y-4">
         <Image
           src={productVariant.imageUrl}
           alt={productVariant.name}
@@ -63,9 +63,7 @@ const ProductVariantPage = async ({ params }: ProductPageProps) => {
             {formatMoney(productVariant.priceInCents)}
           </h3>
         </div>
-        <div className="px-5">
-          <QuantityProduct productVariantId={productVariant.id} />
-        </div>
+        <ProductActions productVariantId={productVariant.id} />
         <div className="px-5">
           <p className="text-shadow-amber-600">
             {productVariant.product.description}
