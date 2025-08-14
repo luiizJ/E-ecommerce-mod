@@ -2,10 +2,14 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
 import { formatMoney } from "@/app/helpers/formatedMoney";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { RemoveProductFromCart } from "@/app/actions/remove-product-to-cart";
 
 interface CartItemProps {
   id: string;
   productName: string;
+  productVariantId?: string;
   productVariantName: string;
   productVariantImage: string;
   productVariantTotalPrice: number;
@@ -15,11 +19,31 @@ interface CartItemProps {
 const CartItem = ({
   id,
   productName,
+  productVariantId,
   productVariantImage,
   productVariantName,
   productVariantTotalPrice,
   quantity,
 }: CartItemProps) => {
+  const queryClient = useQueryClient();
+  const removeProductFromCartMutation = useMutation({
+    mutationKey: ["remove-cart-product"],
+    mutationFn: () => RemoveProductFromCart({ cartItemId: id }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
+    },
+  });
+  const handleDeleteOnClick = () => {
+    removeProductFromCartMutation.mutate(undefined, {
+      onSuccess: () => {
+        toast.success("Produto removido do carrinho.");
+      },
+      onError: (error) => {
+        console.log(error);
+        toast.error("Ocorreu um erro ao remover o produto do carrinho.");
+      },
+    });
+  };
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
@@ -57,7 +81,7 @@ const CartItem = ({
         </div>
       </div>
       <div className="flex flex-col items-end justify-center gap-2">
-        <Button variant={"outline"} size={"icon"}>
+        <Button variant={"outline"} size={"icon"} onClick={handleDeleteOnClick}>
           <TrashIcon />
         </Button>
         <p className="text-sm font-bold">
