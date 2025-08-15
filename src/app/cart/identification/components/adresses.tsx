@@ -23,7 +23,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { shippingAddressTable } from "@/db/schema";
-import { UseCart } from "@/hooks/queries/use-cart";
 
 import { formatAddress } from "../../helpers/address";
 import { useCreateShippingAddress } from "@/hooks/mutations/create-shipping-address";
@@ -157,9 +156,11 @@ const Addresses = ({
 
             <Card>
               <CardContent>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center">
                   <RadioGroupItem value="add_new" id="add_new" />
-                  <Label htmlFor="add_new">Adicionar novo endereço</Label>
+                  <Label htmlFor="add_new" className="cursor-pointer">
+                    Adicionar novo endereço
+                  </Label>
                 </div>
               </CardContent>
             </Card>

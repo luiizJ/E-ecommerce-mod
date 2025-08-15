@@ -13,7 +13,7 @@ import {
   DialogFooter,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useFinishOrder } from "@/hooks/mutations/use-finish-order";
+import { useFinishOrder } from "@/hooks/mutations/finish-order";
 
 const FinishOrderButton = () => {
   const [successDialogIsOpen, setSuccessDialogIsOpen] = useState(false);
