@@ -25,7 +25,7 @@ const FinishOrderButton = () => {
   return (
     <>
       <Button
-        className="w-full rounded-full"
+        className="w-full cursor-pointer rounded-full"
         size="lg"
         onClick={handleFinishOrder}
         disabled={finishOrderMutation.isPending}
@@ -51,7 +51,7 @@ const FinishOrderButton = () => {
           </DialogDescription>
 
           <DialogFooter>
-            <Button className="rounded-full" size="lg">
+            <Button className="cursor-pointer rounded-full" size="lg">
               Ver meus pedidos
             </Button>
             <Button
