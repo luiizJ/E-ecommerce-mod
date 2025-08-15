@@ -12,6 +12,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
 import { formatMoney } from "@/app/helpers/formatedMoney";
 import { UseCart } from "@/hooks/queries/use-cart";
+import Link from "next/link";
 
 export const Cart = () => {
   const { data } = UseCart();
@@ -56,7 +57,9 @@ export const Cart = () => {
                   <p>{formatMoney(data?.totalPriceInCents ?? 0)}</p>
                 </div>
                 <Separator />
-                <Button className="mt-5 rounded-full">Finalizar Compra</Button>
+                <Button className="mt-5 rounded-full">
+                  <Link href={"/cart/identification"}>Finalizar Compra</Link>
+                </Button>
               </div>
             )}
           </div>

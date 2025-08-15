@@ -134,7 +134,7 @@ export const shippingAddressTable = pgTable("shipping_address", {
   country: text().notNull(),
   phone: text().notNull(),
   email: text().notNull(),
-  cpfOrCpnj: text().notNull(),
+  cpfOrCnpj: text().notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
